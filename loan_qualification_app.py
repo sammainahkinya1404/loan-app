@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 # Load and preprocess the dataset
 @st.cache
 def load_data():
-    df = pd.read_csv('/content/df1_loan.csv')
+    df = pd.read_csv('df1_loan.csv')
     df.drop(['Unnamed: 0', 'Loan_ID'], axis=1, inplace=True)
 
     label_encoder = LabelEncoder()
