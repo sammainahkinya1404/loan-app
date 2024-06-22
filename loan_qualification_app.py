@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 # Load and preprocess the dataset
 @st.cache
 def load_data():
-    df = pd.read_csv('df1_loan.csv')
+    df = pd.read_csv('/content/df1_loan.csv')
     df.drop(['Unnamed: 0', 'Loan_ID'], axis=1, inplace=True)
 
     label_encoder = LabelEncoder()
@@ -57,11 +57,13 @@ def user_input_features():
         'Dependents': Dependents,
         'Education': Education,
         'Self_Employed': Self_Employed,
-        'Total_Income': Total_Income,
+        'ApplicantIncome': ApplicantIncome,
+        'CoapplicantIncome': CoapplicantIncome,
         'LoanAmount': LoanAmount,
         'Loan_Amount_Term': Loan_Amount_Term,
         'Credit_History': Credit_History,
-        'Property_Area': Property_Area
+        'Property_Area': Property_Area,
+        'Total_Income': Total_Income
     }
     features = pd.DataFrame(data, index=[0])
     return features
@@ -76,6 +78,9 @@ input_df['Education'] = LabelEncoder().fit_transform(input_df['Education'])
 input_df['Self_Employed'] = LabelEncoder().fit_transform(input_df['Self_Employed'])
 input_df['Property_Area'] = LabelEncoder().fit_transform(input_df['Property_Area'])
 input_df['Credit_History'] = input_df['Credit_History'].apply(lambda x: 1 if x == "Yes" else 0)
+
+# Ensure the order of columns matches the training data
+input_df = input_df[X.columns]
 
 # Predict loan eligibility
 prediction = model.predict(input_df)
